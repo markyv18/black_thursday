@@ -174,7 +174,7 @@ class SalesAnalyst
     # day_sales.inject(0) do |sum, sale|
     #   sum + sale.quantity.to_f * sale.unit_price
     # end
-
+    
     # this works!
     @sales_engine.invoices.find_all_by_date(date).reduce(0) do |sum, invoice|
       sum + invoice.invoice_item_array.reduce(0) do |total, invoice_item|
