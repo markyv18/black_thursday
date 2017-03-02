@@ -12,7 +12,7 @@ class CustomerRepository
   end
 
   def inspect
-    "#<#{self.class} #{merchants.size} rows>"
+    "#<#{self.class} #{repository.size} rows>"
   end
 
   def make_repository

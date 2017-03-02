@@ -315,4 +315,23 @@ class SalesAnalyst
   def merchants_ranked_by_revenue
     top_revenue_earners(@sales_engine.merchants.all.length)
   end
+
+  def card_valid?(number)
+    CreditCheck.new(number).checksum
+  end
+
+  def find_invalid_transactions
+    @sales_engine.transactions.all.reject do |transaction|
+      card_valid?(transaction.credit_card_number.to_i)
+    end
+  end
+
+  def find_bad_customers
+    invoices = find_invalid_transactions.map do |transaction|
+      @sales_engine.invoices.find_by_id(transaction.invoice_id)
+    end.uniq
+    invoices.map do |invoice|
+      @sales_engine.customers.find_by_id(invoice.customer_id)
+    end.uniq
+  end
 end
