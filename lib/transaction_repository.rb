@@ -1,10 +1,10 @@
 require_relative 'transaction'
 class TransactionRepository
   attr_reader :parent
-  def initialize(csv_path, parent)
-    @transaction_csv = CSV.open(csv_path, headers: true, header_converters: :symbol)
+  def initialize(csv, parent)
+    @transaction_csv = CSV.open(csv, headers: true, header_converters: :symbol)
     @parent = parent
-    make_repository
+    @repository = make_repository
   end
 
   def inspect
@@ -12,11 +12,11 @@ class TransactionRepository
   end
 
   def make_repository
-    @repository = {}
+    repository = {}
     @transaction_csv.read.each do |transaction|
-      @repository[transaction[:id]] = Transaction.new(transaction, self)
+      repository[transaction[:id]] = Transaction.new(transaction, self)
     end
-    return self
+    repository
   end
 
   def all
@@ -52,4 +52,3 @@ class TransactionRepository
   end
 
 end
-  

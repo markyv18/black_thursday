@@ -4,18 +4,18 @@ class MerchantRepository
   attr_accessor :merchants
   attr_reader :merchant_repository, :merchant_csv, :se_parent
 
-  def initialize(merchant_csv = nil, se_parent)
-    @merchant_csv = CSV.open merchant_csv, headers: true, header_converters: :symbol
+  def initialize(csv = nil, se_parent)
+    @merchant_csv = CSV.open csv, headers: true, header_converters: :symbol
     @se_parent = se_parent
-    make_merchant_repository
+    @merchant_repository = make_merchant_repository
   end
 
   def make_merchant_repository
-    @merchant_repository = {}
+    merchant_repository = {}
     @merchant_csv.read.each do |merchant|
-      @merchant_repository[merchant[:id]] = Merchant.new(merchant, self)
+      merchant_repository[merchant[:id]] = Merchant.new(merchant, self)
     end
-    return self
+    merchant_repository
   end
 
   def inspect

@@ -4,7 +4,7 @@ class InvoiceItemRepository
   def initialize(csv, parent)
     @invoice_item_csv = CSV.open(csv, headers: true, header_converters: :symbol)
     @parent = parent
-    make_repository
+    @repository = make_repository
   end
 
   def inspect
@@ -12,12 +12,12 @@ class InvoiceItemRepository
   end
 
   def make_repository
-    @repository = {}
+    repository = {}
     @invoice_item_csv.read.each do |invoice|
-      @repository[invoice[:id]] = InvoiceItem.new(invoice, self)
+      repository[invoice[:id]] = InvoiceItem.new(invoice, self)
     end
 
-    return self
+    repository
   end
 
   def all
