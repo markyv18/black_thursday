@@ -1,5 +1,5 @@
-require 'pry'
 class SalesAnalyst
+
   def initialize(sales_engine)
     @sales_engine = sales_engine
     @group_by_number_of_items = group_by_number_of_items
