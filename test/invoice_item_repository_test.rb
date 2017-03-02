@@ -5,7 +5,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def setup
     invoice_item_csv =  './test/fixtures/invoice_items.csv'
-    parent = SalesEngine.new
+    parent = ''
     @repo = InvoiceItemRepository.new(invoice_item_csv, parent)
   end
 

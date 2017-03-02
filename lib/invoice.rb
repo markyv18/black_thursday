@@ -5,7 +5,8 @@ attr_reader :id,
             :merchant_id,
             :status,
             :created_at,
-            :updated_at
+            :updated_at,
+            :parent
 
   def initialize(invoice, invoice_repo_parent = nil)
     @id = invoice[:id].to_i
@@ -16,12 +17,13 @@ attr_reader :id,
     @updated_at = Time.parse(invoice[:updated_at])
     @parent = invoice_repo_parent
   end
+
   def invoice_items
-    @parent.parent.invoice_items.find_all_by_invoice_id(@id)
+    parent.parent.invoice_items.find_all_by_invoice_id(id)
   end
 
   def merchant
-    @parent.parent.merchants.find_by_id(@merchant_id)
+    parent.parent.merchants.find_by_id(merchant_id)
   end
 
   def day_created
@@ -39,28 +41,27 @@ attr_reader :id,
 
   def items
     all_items = invoice_items.map do |invoice_item|
-      @parent.parent.items.find_by_id(invoice_item.item_id)
+      parent.parent.items.find_by_id(invoice_item.item_id)
     end
     all_items
   end
 
   def transactions
-    @parent.parent.transactions.find_all_by_invoice_id(@id)
+    parent.parent.transactions.find_all_by_invoice_id(id)
   end
 
   def customer
-    @parent.parent.customers.find_by_id(@customer_id)
+    parent.parent.customers.find_by_id(customer_id)
   end
 
   def invoice_item_array
-    @parent.parent.invoice_items.find_all_by_invoice_id(@id)
+    parent.parent.invoice_items.find_all_by_invoice_id(id)
   end
 
   def is_paid_in_full?
     transactions.any? do |transaction|
       transaction.result == "success"
     end
-
   end
 
   def total

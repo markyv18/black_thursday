@@ -5,7 +5,7 @@ class MerchantRepositoryTest < Minitest::Test
 
   def setup
     merchant_csv =  './test/fixtures/merchants.csv'
-    parent = SalesEngine.new
+    parent = ''
     @merchant_repo = MerchantRepository.new(merchant_csv, parent)
   end
 

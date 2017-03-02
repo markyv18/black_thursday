@@ -1,8 +1,10 @@
-require_relative "item"
-
+require_relative 'item'
 
 class ItemRepository
-  attr_reader :repository, :parent
+  attr_reader :repository,
+              :parent,
+              :item_csv
+
   def initialize(item_csv, parent)
     @item_csv = CSV.open item_csv, headers: true, header_converters: :symbol
     @parent = parent
@@ -15,21 +17,21 @@ class ItemRepository
 
   def make_repository
     repository = {}
-    @item_csv.read.each do |item|
+    item_csv.read.each do |item|
       repository[item[:id]] = Item.new(item, self)
     end
     repository
   end
 
   def all
-    @repository.map do  |key, value|
+    repository.map do  |key, value|
       value
     end
   end
 
   def find_by_id(id)
-    if @repository[id.to_s]
-      @repository[id.to_s]
+    if repository[id.to_s]
+      repository[id.to_s]
     else
       nil
     end
@@ -64,5 +66,4 @@ class ItemRepository
       item.merchant_id == id
     end
   end
-
 end
