@@ -149,4 +149,17 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 56.95, sa.invoice_status(:shipped)
     assert_equal 13.5, sa.invoice_status(:returned)
   end
+
+  def test_valid_cards
+    assert sa.card_valid?(4024007116028704)
+    refute sa.card_valid?(4068632349831473)
+  end
+
+  def test_find_invalid_transactions
+    assert_equal 4488, sa.find_invalid_transactions.length
+  end
+
+  def test_find_bad_customers
+    assert_equal 841, sa.find_bad_customers.length
+  end
 end
