@@ -1,9 +1,8 @@
 require 'time'
 require 'pry-state'
 require 'csv'
+require 'pry'
 require 'bigdecimal'
-# require 'simplecov'
-# SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/customer_repository'
