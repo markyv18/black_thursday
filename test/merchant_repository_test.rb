@@ -1,14 +1,12 @@
 require './test/test_helper'
-# require './lib/merchant_repository'
-require './lib/sales_engine'
 
 class MerchantRepositoryTest < Minitest::Test
   attr_reader :merchant_repo
+
   def setup
-   @se = SalesEngine.from_csv({
-     :items     => "./test/fixtures/items.csv",
-     :merchants => "./test/fixtures/merchants.csv",})
-   @merchant_repo = @se.merchants
+    merchant_csv =  './test/fixtures/merchants.csv'
+    parent = SalesEngine.new
+    @merchant_repo = MerchantRepository.new(merchant_csv, parent)
   end
 
   def test_all_returns_array
