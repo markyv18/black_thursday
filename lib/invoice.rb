@@ -16,7 +16,7 @@ attr_reader :id,
     @updated_at = Time.parse(invoice[:updated_at])
     @parent = invoice_repo_parent
   end
-  def invoice_items 
+  def invoice_items
     @parent.parent.invoice_items.find_all_by_invoice_id(@id)
   end
 

@@ -6,19 +6,19 @@ class ItemRepository
   def initialize(item_csv, parent)
     @item_csv = CSV.open item_csv, headers: true, header_converters: :symbol
     @parent = parent
-    make_repository
+    @repository = make_repository
   end
 
   def inspect
-    "#<#{self.class} #{@repository.size} rows>"
+    "#<#{self.class} #{repository.size} rows>"
   end
 
   def make_repository
-    @repository = {}
+    repository = {}
     @item_csv.read.each do |item|
-      @repository[item[:id]] = Item.new(item, self)
+      repository[item[:id]] = Item.new(item, self)
     end
-    return self
+    repository
   end
 
   def all

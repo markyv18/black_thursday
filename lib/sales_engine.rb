@@ -8,7 +8,12 @@ require_relative 'customer_repository'
 require 'pry'
 
 class SalesEngine
-  attr_reader :items, :merchants, :invoices, :invoice_items, :transactions, :customers
+  attr_reader :items,
+              :merchants,
+              :invoices,
+              :invoice_items,
+              :transactions,
+              :customers
   def initialize(csv_hash)
     @item_csv = csv_hash[:items]
     @merchant_csv = csv_hash[:merchants]

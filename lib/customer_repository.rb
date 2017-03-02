@@ -5,19 +5,19 @@ class CustomerRepository
   def initialize(path, parent)
     @csv = CSV.open path, headers: true, header_converters: :symbol
     @parent = parent
-    make_repository
+    @repository = make_repository
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    "#<#{self.class} #{merchants.size} rows>"
   end
 
   def make_repository
-    @repository = {}
+    repository = {}
     @csv.read.each do |customer|
-      @repository[customer[:id]] = Customer.new(customer, self)
+      repository[customer[:id]] = Customer.new(customer, self)
     end
-    return self
+    repository
   end
 
   def all
