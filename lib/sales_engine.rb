@@ -32,6 +32,4 @@ class SalesEngine
   def self.from_csv(csv_hash)
     SalesEngine.new(csv_hash)
   end
-
-
 end
