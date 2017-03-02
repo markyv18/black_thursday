@@ -1,9 +1,12 @@
 require_relative 'customer'
 
 class CustomerRepository
-  attr_reader :parent
-  def initialize(path, parent)
-    @csv = CSV.open path, headers: true, header_converters: :symbol
+  attr_reader :parent,
+              :repository,
+              :customer_csv
+
+  def initialize(csv, parent)
+    @customer_csv = CSV.open csv, headers: true, header_converters: :symbol
     @parent = parent
     @repository = make_repository
   end
@@ -14,21 +17,21 @@ class CustomerRepository
 
   def make_repository
     repository = {}
-    @csv.read.each do |customer|
+    customer_csv.read.each do |customer|
       repository[customer[:id]] = Customer.new(customer, self)
     end
     repository
   end
 
   def all
-    @repository.map do  |key, value|
+    repository.map do  |key, value|
       value
     end
   end
 
   def find_by_id(id)
-    if @repository[id.to_s]
-      @repository[id.to_s]
+    if repository[id.to_s]
+      repository[id.to_s]
     else
       nil
     end

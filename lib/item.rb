@@ -1,6 +1,13 @@
 require 'bigdecimal'
+
 class Item
-  attr_reader :id, :name, :description, :unit_price, :merchant_id
+  attr_reader :id,
+              :name,
+              :description,
+              :unit_price,
+              :merchant_id,
+              :parent
+
   def initialize(item, parent)
     @id = item[:id].to_i
     @name = item[:name]
@@ -13,7 +20,7 @@ class Item
   end
 
   def unit_price_to_dollars
-    ("%.2f" % @unit_price).to_f
+    ("%.2f" % unit_price).to_f
   end
 
   def created_at
@@ -25,6 +32,6 @@ class Item
   end
 
   def merchant
-    @parent.parent.merchants.find_by_id(@merchant_id)
+    parent.parent.merchants.find_by_id(merchant_id)
   end
 end

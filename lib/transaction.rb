@@ -5,7 +5,8 @@ class Transaction
               :credit_card_expiration_date,
               :result,
               :created_at,
-              :updated_at
+              :updated_at,
+              :parent
 
   def initialize(transaction, parent)
     @id = transaction[:id].to_i
@@ -19,7 +20,7 @@ class Transaction
   end
 
 def invoice
-  @parent.parent.invoices.find_by_id(@invoice_id)
+  parent.parent.invoices.find_by_id(invoice_id)
 end
 
 end

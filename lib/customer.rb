@@ -13,5 +13,4 @@ class Customer
     @updated_at = Time.parse(customer[:updated_at])
     @parent = parent
   end
-
 end

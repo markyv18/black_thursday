@@ -1,4 +1,5 @@
 require 'bigdecimal'
+
 class InvoiceItem
   attr_reader :id,
               :item_id,
@@ -6,7 +7,8 @@ class InvoiceItem
               :quantity,
               :unit_price,
               :created_at,
-              :updated_at
+              :updated_at,
+              :parent
 
   def initialize(invoice_item, parent)
     @id = invoice_item[:id].to_i
@@ -20,11 +22,10 @@ class InvoiceItem
   end
 
   def unit_price_to_dollars
-    @unit_price.to_f / 100
+    unit_price.to_f / 100
   end
 
   def invoice
-    @parent.parent.invoices.find_by_id(@invoice_id)
+    parent.parent.invoices.find_by_id(invoice_id)
   end
-
 end

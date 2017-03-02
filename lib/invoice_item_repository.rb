@@ -1,6 +1,10 @@
 require_relative 'invoice_item'
+
 class InvoiceItemRepository
-  attr_reader :parent
+  attr_reader :parent,
+              :invoice_item_csv,
+              :repository
+
   def initialize(csv, parent)
     @invoice_item_csv = CSV.open(csv, headers: true, header_converters: :symbol)
     @parent = parent
@@ -13,22 +17,21 @@ class InvoiceItemRepository
 
   def make_repository
     repository = {}
-    @invoice_item_csv.read.each do |invoice|
+    invoice_item_csv.read.each do |invoice|
       repository[invoice[:id]] = InvoiceItem.new(invoice, self)
     end
-
     repository
   end
 
   def all
-    @repository.map do  |key, value|
+    repository.map do  |key, value|
       value
     end
   end
 
   def find_by_id(id)
-    if @repository[id.to_s]
-      @repository[id.to_s]
+    if repository[id.to_s]
+      repository[id.to_s]
     else
       nil
     end
